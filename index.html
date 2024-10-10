@@ -48,25 +48,12 @@
             display: inline-block;
         }
 
-        /* CSS-based marquee effect */
-        .marquee-container {
-            width: 100%;
-            overflow: hidden;
-            white-space: nowrap;
+        /* Marquee styling */
+        .marquee {
             margin-top: 20px;
-        }
-
-        .marquee-text {
-            display: inline-block;
             font-size: 1.5em;
             color: #063679;
             font-weight: bold;
-            animation: marquee 15s linear infinite;
-        }
-
-        @keyframes marquee {
-            0% { transform: translateX(100%); }
-            100% { transform: translateX(-100%); }
         }
     </style>
 </head>
@@ -83,10 +70,8 @@
             <div class="colon">:</div>
             <div class="time" id="sec"></div>
         </div>
-        <!-- CSS-based marquee -->
-        <div class="marquee-container">
-            <div class="marquee-text">Welcome to Gunma Gohkin Philippines Corporation website!</div>
-        </div>
+        <!-- Marquee for the welcome message -->
+        <marquee class="marquee">Welcome to Gunma Gohkin Philippines Corporation website!</marquee>
     </div>
 </div>
 
