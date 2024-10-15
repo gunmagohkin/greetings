@@ -17,7 +17,7 @@
 
         /* Widget Container */
         .widget {
-            padding: 20px;
+            padding: 10px; /* Reduced padding for less height */
             color: #000000;
             display: flex;
             justify-content: center;
@@ -33,9 +33,9 @@
 
         /* Greeting Section */
         .greet {
-            font-size: 3em;
+            font-size: 2.5em; /* Reduced font size for less height */
             font-weight: bold;
-            margin-bottom: 10px;
+            margin-bottom: 5px; /* Adjusted margin for spacing */
             color: #0056b3; /* Blue color for greeting */
             animation: fadeIn 2s ease-in-out;
         }
@@ -43,8 +43,8 @@
         /* Date and Time */
         .date, .clock {
             font-family: 'Courier New', monospace;
-            font-size: 1.8em;
-            margin: 10px 0;
+            font-size: 1.5em; /* Reduced font size */
+            margin: 5px 0; /* Adjusted margin */
             color: #2a5298; /* Dark blue color */
         }
 
@@ -63,8 +63,8 @@
 
         /* Scrolling Text */
         .scrolling-text {
-            margin-top: 20px;
-            font-size: 1.5em;
+            margin-top: 10px; /* Reduced margin */
+            font-size: 1.3em; /* Reduced font size */
             font-weight: bold;
             color: #0056b3; /* Blue color for scrolling text */
             overflow: hidden;
@@ -77,7 +77,7 @@
 
         .scrolling-text span {
             display: inline-block;
-            animation: scrollLeft 15s linear infinite;
+            animation: scrollLeft 10s linear infinite;
         }
 
         /* Animations */
@@ -101,9 +101,9 @@
 
         /* Hover Interaction */
         .widget:hover {
-            transform: scale(1.05);
-            transition: transform 0.3s ease-in-out;
-            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
+            /* Remove the zoom effect */
+            /* transform: scale(1.05); */
+            transition: box-shadow 0.3s ease-in-out; /* Only transition the box-shadow */
         }
     </style>
 </head>
@@ -119,10 +119,11 @@
         <div class="colon">:</div>
         <div class="time" id="sec"></div>
     </div>
-<br>
+    <br>
+
     <!-- Smooth scrolling message -->
     <div class="scrolling-text">
-        <span>Welcome to Gunma Gohkin Philippines Corporation website! Welcome to Gunma Gohkin Philippines Corporation website!</span>
+        <span>Welcome to Gunma Gohkin Philippines Corporation website! </span>
     </div>
 </div>
 
