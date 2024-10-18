@@ -49,13 +49,37 @@
             display: inline-block;
         }
 
-        /* Marquee styling */
         .marquee {
             margin-top: 10px;
             font-size: 1.8em;
             color: #063679;
             font-weight: bold;
         }
+
+        .winter {
+            background-color: #e0f7fa;
+            background-size: cover;
+            color: #1c6e8c;
+        }
+
+        .spring {
+            background-color: #e8f5e9;
+            background-size: cover;
+            color: #388e3c;
+        }
+
+        .summer {
+            background-color: #fffde7;
+            background-size: cover;
+            color: #fbc02d;
+        }
+
+        .autumn {
+            background-color: #e2c28e;
+            background-size: cover;
+            color: #c33408;
+        }
+
     </style>
 </head>
 <body>
@@ -71,78 +95,126 @@
             <div class="colon">:</div>
             <div class="time" id="sec"></div>
         </div>
-        <!-- Marquee for the welcome message -->
-        <marquee class="marquee">Welcome to Gunma Gohkin Philippines Corporation website!</marquee>
+        <marquee class="marquee" id="holiday-greeting">Welcome to Gunma Gohkin Philippines Corporation website!</marquee>
     </div>
 </div>
 
 <script>
-    function dispalyGreetings(today) {
-        hrs = today.getHours();
-        let name = ""; // If you want to add a name, set it here.
+    function applySeasonalTheme(today) {
+        const month = today.getMonth();
+        const widget = document.querySelector('.widget');
+        
+        widget.classList.remove('winter', 'spring', 'summer', 'autumn');
+
+        if (month === 11 || month <= 1) { 
+            widget.classList.add('winter');
+        } else if (month >= 2 && month <= 4) {
+            widget.classList.add('spring');
+        } else if (month >= 5 && month <= 7) {
+            widget.classList.add('summer');
+        } else if (month >= 8 && month <= 10) {
+            widget.classList.add('autumn');
+        }
+    }
+
+    function displayWidget() {
+        var today = new Date();
+        displayGreetings(today);
+        displayDate(today);
+        displayClock(today);
+        displayHolidayGreeting(today);
+        applySeasonalTheme(today);
+        setTimeout(displayWidget, 500);
+    }
+
+    function displayGreetings(today) {
+        const hrs = today.getHours();
+        let name = ""; 
         let greet = "";
         if (hrs < 12)
             greet = 'Good Morning ' + name;
         else if (hrs >= 12 && hrs <= 17)
             greet = 'Good Afternoon ' + name;
-        else if (hrs >= 17 && hrs <= 24)
+        else
             greet = 'Good Evening ' + name;
         document.getElementById('greet').innerHTML = greet;
     }
 
-    function dispalyDate(today) {  
+    function displayDate(today) {  
         const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
         const monthNames = ["January", "February", "March", "April", "May", "June",
                             "July", "August", "September", "October", "November", "December"];
-        var dayName = days[today.getDay()];
-        var monthName = monthNames[today.getMonth()];
-        var date = today.getDate();
-        var year = today.getFullYear();
+        const dayName = days[today.getDay()];
+        const monthName = monthNames[today.getMonth()];
+        const date = today.getDate();
+        const year = today.getFullYear();
         document.getElementById('date').innerHTML = dayName + ", " + monthName + " " + date + " " + year;
     }
 
-    function dispalyClock(today) {
-        var hour = padZeros(twelveHour(today.getHours()));
-        var minutes = padZeros(today.getMinutes());
-        var seconds = padZeros(today.getSeconds());
+    function displayClock(today) {
+        let hour = padZeros(twelveHour(today.getHours()));
+        let minutes = padZeros(today.getMinutes());
+        let seconds = padZeros(today.getSeconds());
 
-        if (today.getHours() >= 12) {
-            seconds += " pm";
-        } else {
-            seconds += " am";
-        }
+        let amPm = today.getHours() >= 12 ? " pm" : " am";
 
         document.getElementById('hour').innerHTML = hour;
         document.getElementById('min').innerHTML = minutes;
-        document.getElementById('sec').innerHTML = seconds;
+        document.getElementById('sec').innerHTML = seconds + amPm;
     }
 
     function twelveHour(hour) {
         if (hour > 12) {
-            return hour -= 12;
+            return hour - 12;
         } else if (hour === 0) {
-            return hour = 12;
+            return 12;
         } else {
             return hour;
         }
     }
 
     function padZeros(num) {
-        if (num < 10) {
-            num = '0' + num;
+        return num < 10 ? '0' + num : num;
+    }
+
+    function displayHolidayGreeting(today) {
+        const holidays = {
+            "1-1": "Happy New Year!🎆",
+            "2-14": "Happy Valentine's Day!💞",
+            "4-9": "Araw ng Kagitingan!🫡",
+            "5-1": "Labor Day!👷🏻",
+            "6-12": "Happy Independence Day!💁🏻‍♀️",
+            "8-28": "Happy National Heroes Day!👨🏻‍🎓", // Example for August
+            "10-31": "Happy Halloween!🎃",
+            "11-1": "Happy All Saints' Day!😇",
+            "10-19": "Happy All Souls' Day!🕯️",
+            "11-30": "Bonifacio Day!🤵🏻‍♂️",
+            "12-24": "Christmas Eve! 🎅🏻",
+            "12-25": "Merry Christmas!🎄",
+            "12-30": "Rizal Day!👨🏻‍🏫",
+            "12-31": "Happy New Year!🎆"
+        };
+
+        const month = today.getMonth() + 1; // getMonth is 0-based
+        const day = today.getDate();
+        const holidayKey = `${month}-${day}`;
+
+        const marquee = document.getElementById('holiday-greeting');
+        if (holidays[holidayKey]) {
+            marquee.innerHTML = `${holidays[holidayKey]} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Welcome to Gunma Gohkin Philippines Corporation website!`;
+        } else {
+            marquee.innerHTML = "Welcome to Gunma Gohkin Philippines Corporation website!";
         }
-        return num;
+
+        // Check for last Monday of August for National Heroes Day
+        const isLastMondayOfAugust = (month === 8 && day > 24 && today.getDay() === 1);
+        if (isLastMondayOfAugust) {
+            marquee.innerHTML = "Happy National Heroes Day!👨🏻‍🎓 Welcome to Gunma Gohkin Philippines Corporation website!";
+        }
     }
 
-    function dispalyWidget() {
-        var today = new Date();
-        dispalyGreetings(today);
-        dispalyDate(today);
-        dispalyClock(today);
-        setTimeout(dispalyWidget, 500);
-    }
-
-    dispalyWidget();
+    // Initial call to start the widget
+    displayWidget();
 </script>
 
 </body>
